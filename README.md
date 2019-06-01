@@ -1,4 +1,10 @@
-# Converting from Chalker's Excel-based Scoring System
+# SciolyFF Conversions
+
+A hodge-podge collection of quick scripts and workflows to convert to and from
+SciolyFF from various different formats. The workflows are all documented in
+this README, which may need an index or something in the future.
+
+## Converting from Chalker's Excel-based Scoring System
 
 Many high-level Science Olympiad competitions have traditionally used Chalker's
 Excel-based Scoring System to output their results in PDF format. To convert
