@@ -6,13 +6,13 @@ from this format into SciolyFF, the following workflow was used (Given the
 sketchiness of the whole thing, your exact experience may differ):
 
 1. Make sure the PDF file only consists of one page of results (see the PDFs in
-   this directory as examples)
+   the titular directory as examples)
    - If not, use the free program PDFSam to separate the pages
 2. Open the PDF in Word (should auto-convert)
 3. Save the Word document as a "Web Page" (.html)
 4. Open the .html file in Excel
-5. Clean up extra information and save as a CSV (see the CSV files in this
-   directory as examples)
+5. Clean up extra information and save as a CSV (see the CSV files in the
+   titular directory as examples)
    - Delete the first three/four header rows
    - Delete the last row with the timestamp
    - Delete the Team Penalties, Team Rank, and Total Team Points columns
