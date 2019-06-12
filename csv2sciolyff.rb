@@ -53,7 +53,9 @@ events.map { |e| e['name'] }.each do |event_name|
     p['event'] == event_name &&
       p['place'] == teams.count
   end
-  next unless last_place_placings.count > 1
+  next if placings.find do |p|
+            p['event'] == event_name && p['place'] == (teams.count - 1)
+          end
 
   last_place_placings.each do |placing|
     placing.store('participated', true)
