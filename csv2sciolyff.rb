@@ -26,9 +26,12 @@ events = csv.first.drop(2).map do |csv_event|
 end
 
 teams = csv.drop(1).map { |r| r[0..1] }.map do |csv_team|
-  { 'school' => csv_team.last[/^[^(]+/].strip,
-    'number' => csv_team.first.to_i,
-    'state' => csv_team.last[/\([A-Z]{2}\)/][/[A-Z]{2}/] }
+  team = { 'school' => csv_team.last[/^[^|(]+/].strip,
+           'number' => csv_team.first.to_i,
+           'state' => csv_team.last[/\([A-Z]{2}\)/][/[A-Z]{2}/],
+           'suffix' => csv_team.last[/\|.+\(/]&.[](1..-2)&.strip }
+  team.delete('suffix') unless team['suffix']
+  team
 end
 
 placings = csv.drop(1).map do |csv_row|
