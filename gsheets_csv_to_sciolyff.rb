@@ -77,6 +77,22 @@ penalties =
     penalty
   end.compact
 
+# Identify and fix placings that are just participations points
+events.map { |e| e['name'] }.each do |event_name|
+  last_place_placings = placings.select do |p|
+    p['event'] == event_name &&
+      p['place'] == teams.count
+  end
+  next if placings.find do |p|
+            p['event'] == event_name && p['place'] == (teams.count - 1)
+          end
+
+  last_place_placings.each do |placing|
+    placing.store('participated', true)
+    placing.delete('place')
+  end
+end
+
 rep = {}
 rep['Tournament'] = tournament
 rep['Events']     = events
