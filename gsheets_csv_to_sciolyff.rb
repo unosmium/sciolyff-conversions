@@ -59,7 +59,8 @@ placings =
       when 'PO' then placing['participated'] = true # not strictly needed
       when 'NS' then placing['participated'] = false
       when 'DQ' then placing['disqualified'] = true
-      when 'L'  then placing['low place']    = true # not yet supported
+      when 'LP' then placing['low place']    = true # not yet supported
+      when 'EX' then placing['exempt']       = true; placing['participated'] = false
       else           placing['place']        = raw_place.to_i
       end
       placing
