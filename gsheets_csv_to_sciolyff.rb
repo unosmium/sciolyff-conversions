@@ -61,6 +61,16 @@ placings =
       when 'DQ' then placing['disqualified'] = true
       when 'LP' then placing['low place']    = true # not yet supported
       when 'EX' then placing['exempt']       = true; placing['participated'] = false
+
+      when /EX\[(.+)\]/
+        placing['exempt'] = true
+        case $1
+        when 'PO' then placing['participated'] = true
+        when 'DQ' then placing['disqualified'] = true
+        when 'LP' then placing['low place']    = true
+        else           placing['place'] = $1.to_i
+        end
+
       else           placing['place']        = raw_place.to_i
       end
       placing
@@ -103,8 +113,10 @@ if ARGV.include?('--exhibition') || ARGV.include?('-e')
     p2_ex = teams.find {|t| t['number'] == p2['team'] }['exhibition']
 
     if p1['place'] != p2['place'] then p1['place'] <=> p2['place']
-    elsif   p1_ex && !p2_ex then -1
-    elsif  !p1_ex &&  p2_ex then  1
+    elsif   p1_ex        && !p2_ex        then -1
+    elsif  !p1_ex        &&  p2_ex        then  1
+    elsif   p1['exempt'] && !p2['exempt'] then -1
+    elsif  !p1['exempt'] &&  p2['exempt'] then  1
     else
       puts "Unresolved tie for #{p1['event']} at #{p1['place']}"
     end
