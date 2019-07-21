@@ -12,7 +12,7 @@ if ARGV.empty?
   exit 1
 end
 
-csv = CSV.read(ARGV.first)
+csv = CSV.read(ARGV.last)
 
 tournament = {}
 tournament['name']     = csv.first[0] unless csv.first[0].nil?
@@ -92,6 +92,37 @@ events.map { |e| e['name'] }.each do |event_name|
     placing.store('participated', true)
     placing.delete('place')
   end
+end
+
+# shift placings down for exhibition teams (fixes fake ties)
+# does not work if there are actual ties in placings
+if ARGV.include?('--exhibition') || ARGV.include?('-e')
+
+  def compare(p1, p2, teams)
+    p1_ex = teams.find {|t| t['number'] == p1['team'] }['exhibition']
+    p2_ex = teams.find {|t| t['number'] == p2['team'] }['exhibition']
+
+    if p1['place'] != p2['place'] then p1['place'] <=> p2['place']
+    elsif   p1_ex && !p2_ex then -1
+    elsif  !p1_ex &&  p2_ex then  1
+    else
+      puts "Unresolved tie for #{p1['event']} at #{p1['place']}"
+    end
+  end
+
+  non_place_placings = placings.reject { |p| p['place'] }
+
+  placings = placings
+    .select { |p| p['place'] }
+    .group_by { |p| p['event'] }
+    .values
+    .map do |p_arr|
+    p_arr
+      .sort { |p1, p2| compare(p1, p2, teams) }
+      .each_with_index.map { |p, i| p['place'] = i + 1; p }
+  end
+    .flatten
+    .concat(non_place_placings)
 end
 
 rep = {}
