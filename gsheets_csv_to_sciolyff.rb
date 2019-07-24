@@ -60,7 +60,7 @@ placings =
       when 'NS' then placing['participated'] = false
       when 'DQ' then placing['disqualified'] = true
       when 'LP' then placing['low place']    = true # not yet supported
-      when 'EX' then placing['exempt']       = true; placing['participated'] = false
+      when 'EX' then placing['exempt']       = true; placing['unknown'] = true
 
       when /EX\[(.+)\]/
         placing['exempt'] = true
@@ -135,6 +135,19 @@ if ARGV.include?('--exhibition') || ARGV.include?('-e')
   end
     .flatten
     .concat(non_place_placings)
+end
+
+# automatically mark ties (make sure to check for PO/NS/DQ first!)
+if ARGV.include?('--mark-ties') || ARGV.include?('-t')
+  placings = placings.map do |p|
+    p['tie'] = true if placings.find do |other_p|
+      other_p['place'] &&
+        other_p['place'] == p['place'] &&
+        other_p['event'] == p['event'] &&
+        other_p != p
+    end
+    p
+  end
 end
 
 rep = {}
