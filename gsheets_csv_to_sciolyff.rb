@@ -59,8 +59,9 @@ placings =
       when 'PO' then placing['participated'] = true # not strictly needed
       when 'NS' then placing['participated'] = false
       when 'DQ' then placing['disqualified'] = true
-      when 'LP' then placing['low place']    = true # not yet supported
-      when 'EX' then placing['exempt']       = true; placing['unknown'] = true
+      when 'LP' then placing['unknown']      = true
+      when '??' then placing['unknown']      = true
+      when 'EX' then placing['exempt']       = true; placing['participated'] = false
 
       when /EX\[(.+)\]/
         placing['exempt'] = true
