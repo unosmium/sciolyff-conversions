@@ -55,7 +55,7 @@ placings =
       placing['event'] = event['name']
 
       raw_place = csv[103..202][t_i][e_i]
-      case raw_place
+      case raw_place.upcase
       when 'PO' then placing['participated'] = true # not strictly needed
       when 'NS' then placing['participated'] = false
       when 'DQ' then placing['disqualified'] = true
