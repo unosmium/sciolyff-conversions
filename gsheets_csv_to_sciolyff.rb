@@ -158,4 +158,7 @@ rep['Teams']      = teams
 rep['Placings']   = placings
 rep['Penalties']  = penalties unless penalties.empty?
 
-puts YAML.dump(rep)
+
+output_file = ARGV.last.split('.').first + '.yaml'
+File.open(output_file, 'w') { |f| f.write(YAML.dump(rep)) }
+system("sciolyff #{output_file}")

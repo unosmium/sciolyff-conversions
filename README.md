@@ -32,7 +32,8 @@ sketchiness of the whole thing, your exact experience may differ):
    - Replace `?` with `-` using in some CSV files using `sed`
 7. Use the converter included in this directory to convert from .csv to .yaml
    ```
-   ./csv2sciolyff [the CSV file] > [name for output file .yaml]
+   ./csv2sciolyff [the CSV file]
+   # will create a file with .csv extension replaced with .yaml
    ```
 8. Manually add to the .yaml file
    - Add Tournament section (and the necessary info)
