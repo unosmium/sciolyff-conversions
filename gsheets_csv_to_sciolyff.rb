@@ -85,7 +85,7 @@ penalties =
     next if points.nil?
 
     penalty['team']   = team['number']
-    penalty['points'] = points
+    penalty['points'] = points.to_i
     penalty
   end.compact
 
