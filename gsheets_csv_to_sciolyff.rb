@@ -119,7 +119,7 @@ if ARGV.include?('--exhibition') || ARGV.include?('-e')
     elsif   p1['exempt'] && !p2['exempt'] then -1
     elsif  !p1['exempt'] &&  p2['exempt'] then  1
     else
-      puts "Unresolved tie for #{p1['event']} at #{p1['place']}"
+      raise "Unresolved tie for #{p1['event']} at #{p1['place']}"
     end
   end
 
